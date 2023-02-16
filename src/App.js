@@ -1,4 +1,6 @@
+import "normalize.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Layout } from "./components/commons/layout";
 import { NotFoundPage } from "./pages/NotFound";
 import { ReviewDetailPage } from "./pages/reviews/detail";
 import { ReviewListPage } from "./pages/reviews/list";
@@ -10,10 +12,38 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<ReviewListPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
-          <Route path="/signIn" element={<SignInPage />} />
-          <Route path="/reviews/:reviewId" element={<ReviewDetailPage />} />
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <ReviewListPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/signUp"
+            element={
+              <Layout>
+                <SignUpPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/signIn"
+            element={
+              <Layout>
+                <SignInPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/reviews/:reviewId"
+            element={
+              <Layout>
+                <ReviewDetailPage />
+              </Layout>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
