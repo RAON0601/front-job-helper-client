@@ -58,7 +58,8 @@ export const useReviewForm = () => {
     handleSubmit,
     trigger,
     formState: { errors },
+    getValues,
   } = useForm({ resolver: yupResolver(ReviewSchema) });
 
-  return { register, setValue, handleSubmit, trigger, errors };
+  return { register, setValue, handleSubmit, trigger, errors, getValues };
 };

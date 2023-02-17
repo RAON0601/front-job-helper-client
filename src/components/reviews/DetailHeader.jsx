@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { loginUserAtom } from '../../atoms/loginUser';
-import { deleteReview } from '../../api/review';
+import { deleteReviewAPI } from '../../api/review';
 import { useNavigate } from 'react-router';
 
 const ControlText = styled(Typography)`
@@ -31,9 +31,13 @@ export const ReviewDetailHeader = ({ writer, review }) => {
     const select = confirm('삭제 하시겠습니까?');
 
     if (select) {
-      await deleteReview(review.reviewId);
+      await deleteReviewAPI(review.reviewId);
       navigate('/');
     }
+  };
+
+  const routeEdit = () => {
+    navigate(`/reviews/edit/${review.reviewId}`);
   };
 
   return (
@@ -45,7 +49,9 @@ export const ReviewDetailHeader = ({ writer, review }) => {
         <Typography>{getYYYYMMDD(createdAt)}</Typography>
       </Stack>
       <Stack flexDirection="row">
-        <ControlText sx={{ marginRight: '4px' }}>수정</ControlText>
+        <ControlText sx={{ marginRight: '4px' }} onClick={routeEdit}>
+          수정
+        </ControlText>
         <ControlText onClick={onDelete}>삭제</ControlText>
       </Stack>
     </Stack>

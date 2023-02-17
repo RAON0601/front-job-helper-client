@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import { fetchReview } from '../../api/review';
+import { fetchReviewAPI } from '../../api/review';
 import { useEffect, useState } from 'react';
 import { Title } from '../../components/reviews/Title';
 import { ReviewDetailHeader } from '../../components/reviews/DetailHeader';
@@ -15,7 +15,7 @@ export const ReviewDetailPage = () => {
 
     async function fetchData() {
       try {
-        const res = await fetchReview(reviewId);
+        const res = await fetchReviewAPI(reviewId);
         setData(res.data);
       } catch (error) {
         alert('에러가 발생했습니다!');

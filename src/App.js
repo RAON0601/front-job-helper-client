@@ -9,6 +9,7 @@ import { SignInPage } from './pages/singIn';
 import { ReviewCratePage } from './pages/reviews/create';
 import { GlobalStyle } from './styles/global';
 import { RecoilRoot } from 'recoil';
+import { ReviewEditPage } from './pages/reviews/edit';
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
               element={
                 <Layout>
                   <ReviewCratePage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/reviews/edit/:reviewId"
+              element={
+                <Layout>
+                  <ReviewEditPage />
                 </Layout>
               }
             />
