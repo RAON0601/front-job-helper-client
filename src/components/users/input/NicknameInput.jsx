@@ -5,8 +5,8 @@ import PersonIcon from '@mui/icons-material/Person';
 export const NicknameInput = ({ register, errors }) => {
   return (
     <Input
-      label="Password"
-      type="password"
+      label="nickname"
+      type="text"
       variant="standard"
       InputProps={{
         startAdornment: (
@@ -15,9 +15,9 @@ export const NicknameInput = ({ register, errors }) => {
           </InputAdornment>
         ),
       }}
-      {...register('password')}
-      error={errors.password ?? false}
-      helperText={errors?.password?.message}
+      {...register('nickname')}
+      error={errors?.nickname ?? false}
+      helperText={errors?.nickname?.message}
     />
   );
 };

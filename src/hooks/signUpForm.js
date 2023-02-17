@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { signUpAPI } from '../api/users';
-import { BAD_REQUEST, FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from '../api/code';
+import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from '../api/code';
 import { useNavigate } from 'react-router-dom';
 
 const SignupSchema = yup.object().shape({
@@ -28,10 +28,10 @@ export const useSignUpForm = () => {
       navigate('/signIn');
     } catch (err) {
       const statusCode = err.response.status;
-      const message = err.response.data.err.message;
+      const message = err.response.data.message;
 
       switch (statusCode) {
-        case (BAD_REQUEST, UNAUTHORIZED, FORBIDDEN):
+        case BAD_REQUEST:
           alert(message);
           break;
         case INTERNAL_SERVER_ERROR:
