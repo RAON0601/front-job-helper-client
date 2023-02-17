@@ -8,11 +8,14 @@ import { ReviewListPage } from './pages/reviews/list';
 import { SignUpPage } from './pages/signUp';
 import { SignInPage } from './pages/singIn';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { ReviewCratePage } from './pages/reviews/create';
+import { GlobalStyle } from './styles/global';
 
 function App() {
   return (
     <QueryConfigComponent>
       <div className="App">
+        <GlobalStyle />
         <BrowserRouter>
           <Routes>
             <Route
@@ -44,6 +47,14 @@ function App() {
               element={
                 <Layout>
                   <ReviewDetailPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/reviews/create"
+              element={
+                <Layout>
+                  <ReviewCratePage />
                 </Layout>
               }
             />
