@@ -25,7 +25,6 @@ export const useSignInForm = () => {
   const onSubmit = async data => {
     try {
       await signInAPI(data);
-      // 여기서 로그인한 회원 정보를 전역으로 관리하면 되는거 아님?
       const result = await check();
       const loginUser = result.data;
       setLoginUser(loginUser);

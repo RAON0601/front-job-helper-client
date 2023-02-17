@@ -1,7 +1,41 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
+import { fetchReview } from '../../api/review';
+import { useEffect, useState } from 'react';
+import { Title } from '../../components/reviews/Title';
+import { ReviewDetailHeader } from '../../components/reviews/DetailHeader';
+import { Divider } from '@mui/material';
 
 export const ReviewDetailPage = () => {
   const { reviewId } = useParams();
+  const [data, setData] = useState();
+  const navigate = useNavigate();
 
-  return <div>리뷰 디테일 페이지</div>;
+  useEffect(() => {
+    fetchData();
+
+    async function fetchData() {
+      try {
+        const res = await fetchReview(reviewId);
+        setData(res.data);
+      } catch (error) {
+        alert('에러가 발생했습니다!');
+        navigate('/');
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!data) return '로딩중';
+
+  const writer = data.writer;
+  const review = data.review;
+
+  return (
+    <>
+      <ReviewDetailHeader {...{ writer, review }} />
+      <Divider />
+      <Title sx={{ marginTop: '20px' }}>{review.title}</Title>
+      <div dangerouslySetInnerHTML={{ __html: review.contents }} />
+    </>
+  );
 };
