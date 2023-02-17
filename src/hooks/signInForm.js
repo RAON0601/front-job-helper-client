@@ -1,9 +1,11 @@
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { signInAPI } from '../api/users';
+import { check, signInAPI } from '../api/users';
 import { BAD_REQUEST, FORBIDDEN, INTERNAL_SERVER_ERROR, UNAUTHORIZED } from '../api/code';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { loginUserAtom } from '../atoms/loginUser';
 
 const SignInSchema = yup.object().shape({
   email: yup.string().email('이메일 형식으로 입력 해주세요!').required('이메일은 필수 입력값 입니다!'),
@@ -16,15 +18,17 @@ export const useSignInForm = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(SignInSchema) });
-
+  const [_, setLoginUser] = useRecoilState(loginUserAtom);
   const navigate = useNavigate();
 
   // data SignInSchema 형식 검증 완료된 상태로 들어옴
   const onSubmit = async data => {
     try {
-      console.log(data);
       await signInAPI(data);
-      alert('로그인이 완료되었습니다!');
+      // 여기서 로그인한 회원 정보를 전역으로 관리하면 되는거 아님?
+      const result = await check();
+      const loginUser = result.data;
+      setLoginUser(loginUser);
       navigate('/');
     } catch (err) {
       const statusCode = err.response.status;

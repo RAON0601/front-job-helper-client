@@ -1,19 +1,18 @@
 import 'normalize.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/commons/layout';
-import { QueryConfigComponent } from './config/ReactQuery';
 import { NotFoundPage } from './pages/NotFound';
 import { ReviewDetailPage } from './pages/reviews/detail';
 import { ReviewListPage } from './pages/reviews/list';
 import { SignUpPage } from './pages/signUp';
 import { SignInPage } from './pages/singIn';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import { ReviewCratePage } from './pages/reviews/create';
 import { GlobalStyle } from './styles/global';
+import { RecoilRoot } from 'recoil';
 
 function App() {
   return (
-    <QueryConfigComponent>
+    <RecoilRoot>
       <div className="App">
         <GlobalStyle />
         <BrowserRouter>
@@ -62,8 +61,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </div>
-      <ReactQueryDevtools initialIsOpen={true} />
-    </QueryConfigComponent>
+    </RecoilRoot>
   );
 }
 

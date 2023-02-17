@@ -4,8 +4,9 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useQueryClient } from 'react-query';
-import { check, signOutAPI } from '../../api/users';
+import { signOutAPI } from '../../api/users';
+import { useRecoilState } from 'recoil';
+import { loginUserAtom } from '../../atoms/loginUser';
 
 const Title = styled(Typography)`
   flex-grow: 1;
@@ -24,11 +25,11 @@ const AppHeader = styled(AppBar)`
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { data } = useQuery('loginUser', check);
-  const queryClient = useQueryClient();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserAtom);
+
   const signOut = async () => {
     await signOutAPI();
-    queryClient.invalidateQueries('loginUser');
+    setLoginUser(null);
   };
 
   return (
@@ -38,9 +39,9 @@ export const Header = () => {
           Front Job Helper
         </Title>
 
-        {data?.data?.nickname ? (
+        {loginUser ? (
           <>
-            <LoginUser>환영합니다 {data.data.nickname}님</LoginUser>
+            <LoginUser>환영합니다 {loginUser.nickname}님</LoginUser>
             <Button color="inherit" onClick={signOut}>
               로그아웃
             </Button>
