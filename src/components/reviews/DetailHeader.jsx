@@ -37,6 +37,11 @@ export const ReviewDetailHeader = ({ writer, review }) => {
   };
 
   const routeEdit = () => {
+    if (loginUser.email !== writer.email) {
+      alert('작성자만 수정 할 수 있습니다!');
+      return;
+    }
+
     navigate(`/reviews/edit/${review.reviewId}`);
   };
 

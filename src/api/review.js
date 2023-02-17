@@ -15,3 +15,11 @@ export const deleteReviewAPI = async reviewId => {
 export const updateReviewAPI = async (reviewId, data) => {
   return await http.put(`/reviews/${reviewId}`, data);
 };
+
+export const countReviewAPI = async () => {
+  return await http.get('/reviews/count');
+};
+
+export const fetchReviewsAPI = async page => {
+  return await http.get(`/reviews?page=${page}`);
+};

@@ -31,10 +31,12 @@ export const useSignInForm = () => {
       navigate('/');
     } catch (err) {
       const statusCode = err.response.status;
-      const message = err.response.data.err.message;
+      const message = err.response.data.message;
 
       switch (statusCode) {
-        case (BAD_REQUEST, UNAUTHORIZED, FORBIDDEN):
+        case BAD_REQUEST:
+        case FORBIDDEN:
+        case UNAUTHORIZED:
           alert(message);
           break;
         case INTERNAL_SERVER_ERROR:
