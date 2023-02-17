@@ -10,8 +10,6 @@ import { fetchReviewAPI, updateReviewAPI } from '../../api/review';
 import { UNAUTHORIZED } from '../../api/code';
 import { useEffect } from 'react';
 
-let defaultContents = '';
-
 export const ReviewEditPage = () => {
   const navigate = useNavigate();
   const { reviewId } = useParams();
@@ -34,7 +32,12 @@ export const ReviewEditPage = () => {
     function setDefaultValue(res) {
       const contents = res.data.review.contents;
       const title = res.data.review.title;
-      defaultContents = contents;
+
+      if (quillRef.current) {
+        const quill = quillRef.current.editor;
+        quill.clipboard.dangerouslyPasteHTML(contents);
+      }
+
       setValue('contents', contents);
       setValue('title', title);
       trigger('contents');
@@ -71,7 +74,7 @@ export const ReviewEditPage = () => {
       <TitleInput {...{ register, errors }} />
 
       <EditorWrapper>
-        <Editor ref={quillRef} onChange={onChange} modules={modules} formats={formats} defaultValue={defaultContents} />
+        <Editor ref={quillRef} onChange={onChange} modules={modules} formats={formats} />
       </EditorWrapper>
 
       <Typography sx={{ paddingLeft: '20px', color: '#d32f2f', fontSize: '0.75rem' }}>
