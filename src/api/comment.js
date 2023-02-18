@@ -7,3 +7,7 @@ export const createCommentAPI = async data => {
 export const fetchCommentsAPI = async (reviewId, page) => {
   return await http.get(`/comments/${reviewId}?page=${page}`);
 };
+
+export const removeCommentAPI = async commentId => {
+  return await http.delete(`/comments/${commentId}`);
+};
