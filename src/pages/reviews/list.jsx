@@ -62,6 +62,9 @@ export const ReviewListPage = () => {
         <Button onClick={() => navigate('/reviews/create')} variant="contained" sx={{ position: 'absolute', right: 0 }}>
           리뷰 작성
         </Button>
+        <Button onClick={() => navigate('/jobs')} sx={{ position: 'absolute', right: '110px' }}>
+          채용공고
+        </Button>
       </Stack>
     </ReviewListWrapper>
   );

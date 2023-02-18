@@ -10,6 +10,7 @@ import { ReviewCratePage } from './pages/reviews/create';
 import { GlobalStyle } from './styles/global';
 import { RecoilRoot } from 'recoil';
 import { ReviewEditPage } from './pages/reviews/edit';
+import { JobListPage } from './pages/jobs/JobListPage';
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
               element={
                 <Layout>
                   <ReviewEditPage />
+                </Layout>
+              }
+            />
+            <Route
+              path="/jobs"
+              element={
+                <Layout>
+                  <JobListPage />
                 </Layout>
               }
             />
