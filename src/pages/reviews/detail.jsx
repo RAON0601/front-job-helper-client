@@ -5,6 +5,8 @@ import { Title } from '../../components/reviews/Title';
 import { ReviewDetailHeader } from '../../components/reviews/DetailHeader';
 import { Divider } from '@mui/material';
 import { DetailWrapper } from '../../components/reviews/DetailWrapper';
+import { CommentCreateForm } from '../../components/comments/create';
+import { CommentHeader } from '../../components/comments/header';
 
 export const ReviewDetailPage = () => {
   const { reviewId } = useParams();
@@ -32,11 +34,18 @@ export const ReviewDetailPage = () => {
   const review = data.review;
 
   return (
-    <DetailWrapper>
-      <ReviewDetailHeader {...{ writer, review }} />
-      <Divider />
-      <Title sx={{ marginTop: '20px' }}>{review.title}</Title>
-      <div dangerouslySetInnerHTML={{ __html: review.contents }} />
-    </DetailWrapper>
+    <>
+      <DetailWrapper>
+        <ReviewDetailHeader {...{ writer, review }} />
+        <Divider />
+        <Title sx={{ marginTop: '20px' }}>{review.title}</Title>
+        <div dangerouslySetInnerHTML={{ __html: review.contents }} />
+      </DetailWrapper>
+
+      <Divider sx={{ mt: 2, mb: 2 }} />
+
+      <CommentHeader />
+      <CommentCreateForm />
+    </>
   );
 };
