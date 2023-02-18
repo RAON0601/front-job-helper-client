@@ -1,20 +1,12 @@
 import Stack from '@mui/system/Stack';
 import { getYYYYMMDD } from '../../utils/date';
-import { DefaultProfileIcon } from './DefaultImageIcon';
+import { DefaultProfileIcon } from '../commons/DefaultImageIcon';
 import Typography from '@mui/material/Typography';
-import styled from '@emotion/styled';
 import { useRecoilState } from 'recoil';
 import { loginUserAtom } from '../../atoms/loginUser';
 import { deleteReviewAPI } from '../../api/review';
 import { useNavigate } from 'react-router';
-
-const ControlText = styled(Typography)`
-  cursor: pointer;
-
-  &:hover {
-    color: #1976d2;
-  }
-`;
+import { ControlText } from '../commons/ControlText';
 
 export const ReviewDetailHeader = ({ writer, review }) => {
   const { nickname, profileImageUrl } = writer;

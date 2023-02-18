@@ -7,11 +7,14 @@ import { Divider } from '@mui/material';
 import { DetailWrapper } from '../../components/reviews/DetailWrapper';
 import { CommentCreateForm } from '../../components/comments/create';
 import { CommentHeader } from '../../components/comments/header';
+import { CommentList } from '../../components/comments/list';
+import { fetchCommentsAPI } from '../../api/comment';
 
 export const ReviewDetailPage = () => {
   const { reviewId } = useParams();
   const [data, setData] = useState();
   const navigate = useNavigate();
+  const [commentInfos, setCommentInfos] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -19,13 +22,15 @@ export const ReviewDetailPage = () => {
     async function fetchData() {
       try {
         const res = await fetchReviewAPI(reviewId);
+        const commentsRes = await fetchCommentsAPI(reviewId, 1);
+
+        setCommentInfos(commentsRes.data.comments);
         setData(res.data);
       } catch (error) {
         alert('에러가 발생했습니다!');
         navigate('/');
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!data) return '로딩중';
@@ -45,7 +50,8 @@ export const ReviewDetailPage = () => {
       <Divider sx={{ mt: 2, mb: 2 }} />
 
       <CommentHeader />
-      <CommentCreateForm />
+      <CommentCreateForm {...{ commentInfos, setCommentInfos }} />
+      <CommentList {...{ commentInfos, setCommentInfos, reviewId }} />
     </>
   );
 };

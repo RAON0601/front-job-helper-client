@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
 import { createCommentAPI } from '../../api/comment';
+import { loginUserAtom } from '../../atoms/loginUser';
 import { useCommentForm } from '../../hooks/comment';
 
 const FormBox = styled(Box)`
@@ -12,13 +14,29 @@ const FormBox = styled(Box)`
   margin-bottom: 20px;
 `;
 
-export const CommentCreateForm = () => {
+export const CommentCreateForm = ({ commentInfos, setCommentInfos }) => {
   const { register, handleSubmit, errors, setValue } = useCommentForm();
   const { reviewId } = useParams();
+  const [loginUser, setLoginUser] = useRecoilState(loginUserAtom);
 
   const onSubmit = async data => {
-    await createCommentAPI({ reviewId, contents: data.contents });
+    const ret = await createCommentAPI({ reviewId, contents: data.contents });
+
+    const commentInfo = {
+      comment: {
+        reviewId,
+        contents: data.contents,
+        createdAt: new Date().toISOString(),
+        commentId: ret.data.comment.commentId,
+      },
+      writer: {
+        nickname: loginUser.nickname,
+        profileImageUrl: '',
+      },
+    };
+
     setValue('contents', '');
+    setCommentInfos([commentInfo, ...commentInfos]);
   };
 
   return (
