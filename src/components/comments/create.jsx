@@ -32,6 +32,7 @@ export const CommentCreateForm = ({ commentInfos, setCommentInfos }) => {
       writer: {
         nickname: loginUser.nickname,
         profileImageUrl: '',
+        email: loginUser.email,
       },
     };
 
