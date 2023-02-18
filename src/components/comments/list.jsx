@@ -1,32 +1,9 @@
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
 import InfiniteScroll from 'react-infinite-scroller';
-import { DefaultProfileIcon } from '../commons/DefaultImageIcon';
-import { getYYYYMMDD } from '../../utils/date';
-import { ControlText } from '../commons/ControlText';
-import { fetchCommentsAPI, removeCommentAPI } from '../../api/comment';
+import { fetchCommentsAPI, removeCommentAPI, updateCommentAPI } from '../../api/comment';
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { loginUserAtom } from '../../atoms/loginUser';
-
-const CommentItem = ({ comment, writer, onDelete, onUpdate }) => {
-  return (
-    <Stack flexDirection="row" sx={{ margin: '16px 0', padding: '16px 0', borderBottom: '1px solid #ccc' }}>
-      <DefaultProfileIcon />
-
-      <Stack flexDirection="column" flexGrow={1}>
-        <Typography fontWeight={700}>{writer.nickname}</Typography>
-        <Typography fontSize={16}>{comment.contents}</Typography>
-        <Typography fontSize={12}>{getYYYYMMDD(comment.createdAt)}</Typography>
-      </Stack>
-
-      <Stack flexDirection="row">
-        <ControlText sx={{ mr: 1 }}>수정</ControlText>
-        <ControlText onClick={() => onDelete(comment, writer)}>삭제</ControlText>
-      </Stack>
-    </Stack>
-  );
-};
+import { CommentItem } from './item';
 
 export const CommentList = ({ commentInfos, setCommentInfos, reviewId }) => {
   const [hasMore, setHasMore] = useState(true);
@@ -61,7 +38,26 @@ export const CommentList = ({ commentInfos, setCommentInfos, reviewId }) => {
     }
   };
 
-  const onUpdate = (comment, writer) => {};
+  const onUpdate = async comment => {
+    const updatedCommentRes = await updateCommentAPI(comment);
+    const updatedComment = updatedCommentRes.data.comment;
+
+    setCommentInfos(
+      commentInfos.map(commentInfo => {
+        if (commentInfo.comment.commentId !== updatedComment.comment_id) {
+          return commentInfo;
+        }
+        return {
+          ...commentInfo,
+          comment: {
+            ...updatedComment,
+            commentId: updatedComment.comment_id,
+            createdAt: updatedComment.created_at,
+          },
+        };
+      }),
+    );
+  };
 
   return (
     <InfiniteScroll pageStart={1} loadMore={onLoadMore} hasMore={hasMore}>

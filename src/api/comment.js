@@ -11,3 +11,7 @@ export const fetchCommentsAPI = async (reviewId, page) => {
 export const removeCommentAPI = async commentId => {
   return await http.delete(`/comments/${commentId}`);
 };
+
+export const updateCommentAPI = async comment => {
+  return await http.put(`/comments/${comment.commentId}`, { contents: comment.contents });
+};
