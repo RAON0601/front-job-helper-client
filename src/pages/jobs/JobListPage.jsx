@@ -22,7 +22,7 @@ export const JobListPage = () => {
 
   if (loading) return <div>로딩중..</div>;
   return (
-    <Table>
+    <Table sx={{ backgroundColor: 'white' }}>
       <TableHead>
         <TableRow>
           <TableCell align="center">회사</TableCell>
